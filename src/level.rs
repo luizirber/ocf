@@ -3,9 +3,9 @@
 /// 9 optimize the size of the output.
 ///
 /// For bzip2:
-///  - `One` is convert in `bzip2::Compression::Fastest`,
+///  - `Zero`/`One` are convert to `bzip2::Compression::Fastest`,
 ///  - `Nine` in `bzip2::Compression::Best`
-///     and other value is convert in `bzip2::Compression::Default.
+///     and other value is convert to `bzip2::Compression::Default.
 #[derive(Debug, PartialEq, Eq, Clone, Copy)]
 pub enum Level {
     Zero,
@@ -113,7 +113,7 @@ impl From<Level> for flate2::Compression {
 impl From<Level> for bzip2::Compression {
     fn from(level: Level) -> Self {
         match level {
-            Level::Zero => bzip2::Compression::new(0),
+            Level::Zero => bzip2::Compression::new(1),
             Level::One => bzip2::Compression::new(1),
             Level::Two => bzip2::Compression::new(2),
             Level::Three => bzip2::Compression::new(3),
@@ -338,7 +338,7 @@ mod test {
     #[cfg(feature = "bz2")]
     fn level2bzip2() {
         let tmp: bzip2::Compression = Level::Zero.into();
-        assert_eq!(tmp.level(), bzip2::Compression::new(0).level());
+        assert_eq!(tmp.level(), bzip2::Compression::new(1).level());
 
         let tmp: bzip2::Compression = Level::One.into();
         assert_eq!(tmp.level(), bzip2::Compression::new(1).level());
