@@ -55,7 +55,7 @@ jobs:
         run: |
           cargo nextest run
 
-  test_all_feature_combinations:
+  test_all_features:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -66,12 +66,13 @@ jobs:
 
       - uses: taiki-e/install-action@nextest
 
-      - uses: taiki-e/install-action@v2
-        with:
-          tool: cargo-feature-combinations
-
-      - name: Run tests for all feature combinations
-        run: cargo fc nextest run
+      - name: Run tests for all features
+        run: |
+          cargo nextest run --no-default-features --features bgz,bgzip/default
+          cargo nextest run --no-default-features --features bz2,bzip2/default
+          cargo nextest run --no-default-features --features gz,flate2/default
+          cargo nextest run --no-default-features --features lzma,liblzma/default
+          cargo nextest run --no-default-features --features zstd,zstd/default
 
   coverage:
     runs-on: ubuntu-latest

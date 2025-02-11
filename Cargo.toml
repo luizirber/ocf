@@ -64,10 +64,3 @@ required-features = ["bz2"]
 name = "lzma"
 harness = false
 required-features = ["lzma"]
-
-[package.metadata.cargo-feature-combinations]
-denylist = [
-  # skip default and wasm
-  "default",
-  "wasm",
-]

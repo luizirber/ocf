@@ -32,7 +32,7 @@ cargo-nextest = ">=0.9.78,<0.10"
 cargo-llvm-cov = ">=0.6.15,<0.7"
 
 [feature.dev.tasks]
-install_tools = "cargo install -f cargo-binstall && cargo binstall -y --force cargo-feature-combinations && cargo binstall -y --force cargo-semver-checks"
+install_tools = "cargo install -f cargo-binstall && cargo binstall -y --force cargo-semver-checks"
 
 [feature.build.dependencies]
 compilers = ">=1.7.0,<1.8"
