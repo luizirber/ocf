@@ -1,6 +1,6 @@
 [project]
 name = "niffler"
-version = "2.7.0"
+version = "3.0.0"
 description = "Simple and transparent support for compressed files."
 authors = ["Pierre Marijon <pierre@marijon.fr>", "Luiz Irber <luiz.irber@gmail.com>"]
 channels = ["conda-forge"]
@@ -30,6 +30,9 @@ check_msrv = "cargo build"
 rust = "~=1.84.0"
 cargo-nextest = ">=0.9.78,<0.10"
 cargo-llvm-cov = ">=0.6.15,<0.7"
+
+[feature.dev.tasks]
+install_tools = "cargo install -f cargo-binstall && cargo binstall -y --force cargo-semver-checks"
 
 [feature.build.dependencies]
 compilers = ">=1.7.0,<1.8"

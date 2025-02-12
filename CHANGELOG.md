@@ -13,6 +13,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+## [3.0.0] - 2025-02-12
+
+### Changed
+
+- Clean up feature usage. Removed many transitive features,
+  and `xz` feature (use `lzma` feature instead).
+  For projects that disable default features see [updated instructions]
+  on how to use specific compression formats and their crate specific
+  feature flags (#68)
+
+[updated instructions]: https://docs.rs/niffler/3.0.0/niffler/index.html#selecting-compression-formats
+
+### Added
+
+- Explicit `wasm` feature for compression formats supported in webassembly
+  (`wasm32-unknown-unknown` target) (#72)
+- Pixi configuration for local development (#71)
+- CI: run benchmarks and upload results to codspeed.io
+- Deps: bump `bzip2` to `0.5.1`.
+
+### Fixed
+
 ## [2.7.0] - 2025-01-24
 
 ### Added
@@ -137,7 +159,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Rename crate from `ocf` to `niffler`
 - Import codebase from sourmash repo (which copied it from the yacrd repo)
 
-[unreleased]: https://github.com/luizirber/niffler/compare/v2.7.0...HEAD
+[unreleased]: https://github.com/luizirber/niffler/compare/v3.0.0...HEAD
+[3.0.0]: https://github.com/luizirber/niffler/compare/v2.7.0..v3.0.0
 [2.7.0]: https://github.com/luizirber/niffler/compare/v2.6.0..v2.7.0
 [2.6.0]: https://github.com/luizirber/niffler/compare/v2.5.0..v2.6.0
 [2.5.0]: https://github.com/luizirber/niffler/compare/v2.4.0..v2.5.0

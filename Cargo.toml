@@ -1,6 +1,6 @@
 [package]
 name = "niffler"
-version = "2.7.0"
+version = "3.0.0"
 authors = ["Pierre Marijon <pierre@marijon.fr>", "Luiz Irber <luiz.irber@gmail.com>"]
 description = "Simple and transparent support for compressed files"
 license = "MIT/Apache-2.0"
@@ -12,42 +12,35 @@ edition = "2021"
 rust-version = "1.74"
 
 [features]
-default = ["bz2", "lzma", "xz", "gz", "bgz", "zstd"]
-bz2 = ["bzip2"]
-lzma = ["liblzma"]
-gz = ["flate2"]
-bgz = ["bgzip"]
-xz = ["lzma"]
+default = [
+    "bgz", "bgzip/default",
+    "bz2", "bzip2/default",
+    "gz", "flate2/default",
+    "lzma", "liblzma/default",
+    "zstd", "zstd/default"
+]
+bz2 = ["dep:bzip2"]
+lzma = ["dep:liblzma"]
+gz = ["dep:flate2"]
+bgz = ["dep:bgzip"]
 zstd = ["dep:zstd"]
-wasm = ["zstd", "lzma", "gz", "bgz"]
 
-# bzip2 feature transitivity
-bz2_tokio = ["bzip2/tokio"]
-bz2_static = ["bzip2/static"]
-
-# lzma feature transitivity
-lzma_tokio = ["liblzma/tokio"]
-
-# flate2 feature transitivity
-gz_zlib = ["flate2/zlib"]
-gz_zlib-ng-compat = ["flate2/zlib-ng-compat"]
-gz_zlib-ng = ["flate2/zlib-ng"]
-gz_cloudflare_zlib = ["flate2/cloudflare_zlib"]
-gz_rust_backend = ["flate2/rust_backend"]
-
-# xz feature transitivity
-xz_tokio = ["liblzma/tokio"]
+wasm = [
+    "zstd",
+    "lzma", "liblzma/default",
+    "gz", "flate2/rust_backend",
+    "bgz", "bgzip/rust_backend",
+    "bz2", "bzip2/libbz2-rs-sys",
+]
 
 [dependencies]
 cfg-if = "1.0"
 thiserror = "2.0"
-bzip2 = { version = "0.4.4", optional = true }
-flate2 = { version = "1.0", optional = true }
-liblzma = { version = "0.3", optional = true }
-bgzip = { version = "0.3", optional = true, default-features = false, features = [
-  "rust_backend",
-] }
-zstd = { version = "0.13", optional = true }
+bzip2 = { version = "0.5.1", optional = true, default-features = false }
+flate2 = { version = "1.0", optional = true, default-features = false }
+liblzma = { version = "0.3", optional = true, default-features = false }
+bgzip = { version = "0.3", optional = true, default-features = false }
+zstd = { version = "0.13", optional = true, default-features = false }
 
 [dev-dependencies]
 tempfile = "3"
@@ -70,36 +63,4 @@ required-features = ["bz2"]
 [[bench]]
 name = "lzma"
 harness = false
-required-features = ["xz"]
-
-[package.metadata.cargo-feature-combinations]
-denylist = [
-  # bzip2 feature transitivity
-  "bz2_tokio",
-  "bz2_static",
-
-  # lzma feature transitivity
-  "lzma_tokio",
-
-  # flate2 feature transitivity
-  "gz_zlib",
-  "gz_zlib-ng",
-  "gz_zlib-ng-compat",
-  "gz_cloudflare_zlib",
-  "gz_rust_backend",
-
-  # xz feature transitivity
-  "xz_tokio",
-
-  # xz is an alias to lzma
-  "xz",
-
-  # optional dependencies
-  "bzip2",
-  "flate2",
-  "liblzma",
-  "bgzip",
-
-  # skip default
-  "default",
-]
+required-features = ["lzma"]

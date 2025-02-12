@@ -78,7 +78,7 @@ cfg_if! {
             inp: Box<dyn io::Read + Send + 'a>,
         ) -> Result<(Box<dyn io::Read + Send + 'a>, Format), Error> {
             Ok((
-                Box::new(bzip2::read::BzDecoder::new(inp)),
+                Box::new(bzip2::read::MultiBzDecoder::new(inp)),
                 Format::Bzip,
             ))
         }
